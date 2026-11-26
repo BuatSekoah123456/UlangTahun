@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html lang="id">
 
+<style>
+    /* Pastikan font-judul & body sesuai pilihan Google Fonts kamu dari tahap sebelumnya */
+    @keyframes putar-piringan {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .piringan-putar {
+        animation: putar-piringan 6s linear infinite;
+    }
+
+    .piringan-jeda {
+        animation-play-state: paused;
+    }
+</style>
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,4 +52,143 @@
                 You Are Invited
             </p>
             <div class="mx-auto h-0.5 w-12 bg-white/60 rounded-full"></div>
-        </header
+        </header <!-- KONTEN UTAMA (Di balik cover) -->
+        <div id="konten-utama" class="min-h-screen bg-gradient-to-b from-blue-950 via-blue-900 to-slate-950 text-white">
+
+            <!-- TOPBAR NAVIGASI (Mobile-First & Sticky) -->
+            <nav class="sticky top-0 z-40 border-b border-white/15 bg-blue-950/80 backdrop-blur-md">
+                <div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3 sm:px-6">
+                    <!-- Logo / Inisial -->
+                    <a href="#hero" class="font-judul text-base font-bold tracking-wide text-white sm:text-lg">
+                        Najwan<span class="text-sky-300">.17</span>
+                    </a>
+
+                    <!-- Menu Navigasi (Rapi di HP maupun Laptop) -->
+                    <ul class="flex items-center gap-4 text-xs font-medium text-blue-100 sm:gap-6 sm:text-sm">
+                        <li><a href="#hero" class="transition hover:text-white">Beranda</a></li>
+                        <li><a href="#acara" class="transition hover:text-white">Acara</a></li>
+                        <li>
+                            <a href="#rsvp"
+                                class="rounded-full bg-white px-3.5 py-1.5 font-semibold text-blue-900 transition hover:bg-sky-100">
+                                RSVP
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- HERO / LANDING PAGE -->
+            <section id="hero"
+                class="mx-auto flex min-h-[85vh] max-w-3xl flex-col items-center justify-center px-5 py-14 text-center sm:px-8">
+                <!-- Badge Tanggal -->
+                <span
+                    class="inline-block rounded-full border border-sky-300/40 bg-sky-400/15 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-sky-200">
+                    <!-- TODO (Poin b): Sesuaikan tahun/usia jika perlu -->
+                    13 Februari 2027 • 17th Birthday
+                </span>
+
+                <!-- Nama Utama -->
+                <h1 class="font-judul mt-5 text-3xl font-bold leading-tight text-white sm:text-5xl">
+                    Najwan Nafidz Nuryanto
+                </h1>
+                <p class="mt-2 text-xs tracking-wider text-sky-200/90 sm:text-sm">
+                    Lahir 13 Februari 2010
+                </p>
+
+                <!-- Garis Aksen Putih -->
+                <div class="my-6 h-0.5 w-16 rounded-full bg-white/50"></div>
+
+                <!-- Kartu Ucapan & Undangan -->
+                <!-- TODO (Poin b): Ubah teks ucapan dan ajakan di bawah ini pakai gaya bahasamu sendiri -->
+                <div
+                    class="w-full rounded-2xl border border-white/20 bg-white/10 p-6 text-sm leading-relaxed text-blue-50 shadow-xl backdrop-blur-sm sm:p-8 sm:text-base">
+                    <p>
+                        Selamat ulang tahun yang ke-17 untuk <strong class="text-white">Najwan Nafidz Nuryanto</strong>!
+                        Semoga di usia yang baru selalu diberi kesehatan, kebahagiaan, dan segala impiannya tercapai.
+                    </p>
+                    <p class="mt-3 text-blue-100">
+                        Dengan penuh rasa syukur, kami mengundang kehadiran teman-teman dan keluarga untuk ikut
+                        merayakan momen spesial ini bersama-sama.
+                    </p>
+                </div>
+
+                <!-- Tombol Aksi Cepat -->
+                <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+                    <a href="#acara"
+                        class="rounded-full bg-white px-7 py-3 text-sm font-semibold text-blue-950 shadow-md transition hover:bg-sky-100">
+                        Lihat Detail Acara
+                    </a>
+                    <a href="#rsvp"
+                        class="rounded-full border border-white/40 bg-white/5 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/15">
+                        Konfirmasi Kehadiran
+                    </a>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- AUDIO BACKGROUND -->
+        <!-- TODO (Poin b): Masukkan file .mp3 pilihanmu ke folder proyek lalu sesuaikan nama filenya di src -->
+        <audio id="bgm" loop preload="auto">
+            <source src="musik.mp3" type="audio/mpeg" />
+        </audio>
+
+        <!-- TOMBOL PIRINGAN HITAM (POJOK KIRI BAWAH) -->
+        <button id="btn-musik" type="button" aria-label="Putar atau matikan musik"
+            class="fixed bottom-5 left-5 z-40 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/60 bg-slate-950 shadow-lg shadow-blue-950/60 transition hover:scale-105 active:scale-95">
+            <!-- Visual Piringan Hitam (Vinyl) -->
+            <div id="piringan"
+                class="piringan-putar piringan-jeda relative flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-tr from-zinc-950 via-zinc-800 to-zinc-950 ring-2 ring-zinc-700/70">
+                <!-- Alur piringan tipis -->
+                <div class="h-8 w-8 rounded-full border border-white/15"></div>
+                <!-- Label tengah warna biru & lubang putih -->
+                <div class="absolute flex h-4 w-4 items-center justify-center rounded-full bg-sky-500">
+                    <div class="h-1.5 w-1.5 rounded-full bg-white"></div>
+                </div>
+            </div>
+        </button>
+
+        <script>
+            // 1. Ambil elemen-elemen yang dibutuhkan dari HTML
+            const cover = document.getElementById('cover');
+            const btnBuka = document.getElementById('btn-buka');
+            const bgm = document.getElementById('bgm');
+            const btnMusik = document.getElementById('btn-musik');
+            const piringan = document.getElementById('piringan');
+
+            // 2. Fungsi untuk memutar musik & menjalankan putaran piringan
+            function putarMusik() {
+                bgm.play().then(() => {
+                    piringan.classList.remove('piringan-jeda');
+                }).catch((err) => {
+                    console.log('Audio menunggu interaksi pengguna:', err);
+                });
+            }
+
+            // 3. Fungsi untuk menjeda musik & menghentikan putaran piringan
+            function jedaMusik() {
+                bgm.pause();
+                piringan.classList.add('piringan-jeda');
+            }
+
+            // 4. Saat tombol "Buka Undangan" diklik: tutup cover & putar musik
+            btnBuka.addEventListener('click', () => {
+                cover.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    cover.classList.add('hidden');
+                }, 700); // Menunggu animasi pudar selesai (duration-700)
+
+                putarMusik();
+            });
+
+            // 5. Saat piringan hitam diklik: cek status musik (mati -> nyala, nyala -> mati)
+            btnMusik.addEventListener('click', () => {
+                if (bgm.paused) {
+                    putarMusik();
+                } else {
+                    jedaMusik();
+                }
+            });
+        </script>
+
+</body>
