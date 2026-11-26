@@ -47,7 +47,9 @@
     <!-- ==================== 1. COVER FULL-SCREEN ==================== -->
     <!-- TODO (Poin b): Sesuaikan kombinasi variasi warna biru jika ingin beda dari default -->
     <section id="cover"
-        class="fixed inset-0 z-50 flex flex-col items-center justify-between px-6 py-12 text-center bg-gradient-to-b from-blue-950 via-blue-800 to-sky-600 transition-opacity duration-700">
+        class="fixed inset-0 z-50 flex flex-col items-center justify-between overflow-y-auto px-6 py-8 text-center bg-gradient-to-b from-blue-950 via-blue-800 to-sky-600 transition-opacity duration-700 sm:py-10">
+
+        <!-- 1. Teks Paling Atas -->
         <header class="space-y-1">
             <p class="text-xs uppercase tracking-[0.3em] text-sky-200">
                 You Are Invited
@@ -55,33 +57,34 @@
             <div class="mx-auto h-0.5 w-12 rounded-full bg-white/60"></div>
         </header>
 
-        <main class="max-w-md space-y-5">
-            <!-- FOTO PROFIL DI COVER -->
-            <div
-                class="mx-auto w-fit rounded-full bg-gradient-to-tr from-sky-300 via-white to-blue-400 p-1 shadow-lg shadow-blue-950/40">
-                <div class="rounded-full bg-blue-950 p-1">
-                    <img src="nafidz.jpg" alt="Potret Najwan Nafidz Nuryanto"
-                        class="h-28 w-28 rounded-full object-cover object-top sm:h-32 sm:w-700" />
-                </div>
+        <!-- 2. Foto Profil (Sekarang terpisah agar tepat di tengah & proporsional) -->
+        <div
+            class="my-4 rounded-full bg-gradient-to-tr from-sky-300 via-white to-blue-400 p-1.5 shadow-xl shadow-blue-950/40">
+            <div class="rounded-full bg-blue-950 p-1.5">
+                <img src="nafidz.jpg" alt="Potret Najwan Nafidz Nuryanto"
+                    class="h-36 w-36 rounded-full object-cover object-top sm:h-48 sm:w-48" />
             </div>
-            <p class="text-sm font-medium uppercase tracking-widest text-blue-100">
-                <!-- TODO (Poin b): Sesuaikan label acara/usia -->
+        </div>
+
+        <!-- 3. Judul & Kotak Tamu -->
+        <main class="w-full max-w-md space-y-3 sm:space-y-4">
+            <p class="text-xs font-medium uppercase tracking-widest text-blue-100 sm:text-sm">
                 Sweet 17th Birthday
             </p>
-            <h1 class="font-judul text-4xl font-bold tracking-tight text-white drop-shadow sm:text-5xl">
+            <h1 class="font-judul text-3xl font-bold tracking-tight text-white drop-shadow sm:text-5xl">
                 Najwan Nafidz Nuryanto
             </h1>
 
-            <!-- Kotak Sapaan Tamu (siap dihubungkan ke Parameter URL di tahap berikutnya) -->
-            <div class="mt-4 rounded-2xl border border-white/30 bg-white/10 px-6 py-4 backdrop-blur-sm">
+            <div class="mt-3 rounded-2xl border border-white/30 bg-white/10 px-6 py-3.5 backdrop-blur-sm">
                 <p class="text-xs text-blue-100">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
-                <p id="nama-tamu" class="mt-1 text-lg font-semibold text-white">
+                <p id="nama-tamu" class="mt-1 text-base font-semibold text-white sm:text-lg">
                     Tamu Undangan
                 </p>
             </div>
         </main>
 
-        <footer class="pb-2">
+        <!-- 4. Tombol Buka Undangan -->
+        <footer class="pt-4 pb-1">
             <button id="btn-buka" type="button"
                 class="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3 text-sm font-semibold text-blue-900 shadow-lg shadow-blue-950/30 transition hover:bg-sky-100 active:scale-95">
                 <span>Buka Undangan</span>
