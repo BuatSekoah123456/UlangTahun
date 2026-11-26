@@ -56,6 +56,14 @@
         </header>
 
         <main class="max-w-md space-y-5">
+            <!-- FOTO PROFIL DI COVER -->
+            <div
+                class="mx-auto w-fit rounded-full bg-gradient-to-tr from-sky-300 via-white to-blue-400 p-1 shadow-lg shadow-blue-950/40">
+                <div class="rounded-full bg-blue-950 p-1">
+                    <img src="nafidz.jpg" alt="Potret Najwan Nafidz Nuryanto"
+                        class="h-28 w-28 rounded-full object-cover object-top sm:h-32 sm:w-700" />
+                </div>
+            </div>
             <p class="text-sm font-medium uppercase tracking-widest text-blue-100">
                 <!-- TODO (Poin b): Sesuaikan label acara/usia -->
                 Sweet 17th Birthday
@@ -91,12 +99,22 @@
                     Najwan<span class="text-sky-300">.17</span>
                 </a>
 
-                <ul class="flex items-center gap-4 text-xs font-medium text-blue-100 sm:gap-6 sm:text-sm">
-                    <li><a href="#hero" class="transition hover:text-white">Beranda</a></li>
-                    <li><a href="#acara" class="transition hover:text-white">Acara</a></li>
+                <ul class="flex items-center gap-2 text-xs font-medium sm:gap-3 sm:text-sm">
+                    <li>
+                        <a href="#hero"
+                            class="nav-link rounded-full bg-white px-3.5 py-1.5 font-semibold text-blue-900 transition">
+                            Beranda
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#acara"
+                            class="nav-link rounded-full px-3.5 py-1.5 text-blue-100 transition hover:text-white">
+                            Acara
+                        </a>
+                    </li>
                     <li>
                         <a href="#rsvp"
-                            class="rounded-full bg-white px-3.5 py-1.5 font-semibold text-blue-900 transition hover:bg-sky-100">
+                            class="nav-link rounded-full px-3.5 py-1.5 text-blue-100 transition hover:text-white">
                             RSVP
                         </a>
                     </li>
@@ -389,6 +407,11 @@
         }
 
         btnBuka.addEventListener('click', () => {
+            // Pastikan selalu mulai dari paling atas (Beranda) dan bersihkan #hash lama
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+            setMenuAktif('hero');
+
             cover.classList.add('opacity-0', 'pointer-events-none');
             setTimeout(() => {
                 cover.classList.add('hidden');
@@ -404,6 +427,50 @@
                 jedaMusik();
             }
         });
+
+        // ---------- HIGHLIGHT TOPBAR SESUAI POSISI SCROLL ----------
+        const navLinks = document.querySelectorAll('.nav-link');
+        const daftarSection = [
+            document.getElementById('hero'),
+            document.getElementById('acara'),
+            document.getElementById('rsvp')
+        ];
+
+        const kelasAktif = ['bg-white', 'text-blue-900', 'font-semibold'];
+        const kelasBiasa = ['text-blue-100', 'hover:text-white'];
+
+        function setMenuAktif(idAktif) {
+            navLinks.forEach((link) => {
+                if (link.getAttribute('href') === '#' + idAktif) {
+                    link.classList.add(...kelasAktif);
+                    link.classList.remove(...kelasBiasa);
+                } else {
+                    link.classList.remove(...kelasAktif);
+                    link.classList.add(...kelasBiasa);
+                }
+            });
+        }
+
+        function cekPosisiScroll() {
+            const posisi = window.scrollY + 150;
+            const mentokBawah = window.innerHeight + window.scrollY >= document.body.offsetHeight - 50;
+
+            if (mentokBawah) {
+                setMenuAktif('rsvp');
+                return;
+            }
+
+            let idAktif = 'hero';
+            daftarSection.forEach((sec) => {
+                if (sec && posisi >= sec.offsetTop) {
+                    idAktif = sec.id;
+                }
+            });
+            setMenuAktif(idAktif);
+        }
+
+        window.addEventListener('scroll', cekPosisiScroll);
+        cekPosisiScroll();
 
         // ---------- COUNTDOWN ACARA ----------
         // TODO (Poin b): Pastikan jam mulai di sini sama dengan jam di kartu Detail Acara
