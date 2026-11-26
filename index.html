@@ -363,7 +363,10 @@
         </div>
     </button>
 
-    <!-- ==================== 4. JAVASCRIPT ==================== -->
+    <!-- ==================== 4. Supabase ==================== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- ==================== 5. JAVASCRIPT ==================== -->
     <script>
         // ---------- KONTROL COVER & AUDIO ----------
         const cover = document.getElementById('cover');
@@ -434,7 +437,12 @@
         const timerCountdown = setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // ---------- DOM MANIPULASI RSVP ----------
+        // ---------- KONEKSI SUPABASE ----------
+        const SUPABASE_URL = 'https://vqhiupshnrnxcgwzmpxl.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_-VS1VSN12eSzUq1tx0rgJw_W-4f7Qbf';
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ---------- DOM MANIPULASI RSVP + SUPABASE ----------
         const formRsvp = document.getElementById('form-rsvp');
         const inputNama = document.getElementById('input-nama');
         const inputStatus = document.getElementById('input-status');
@@ -447,23 +455,8 @@
         let totalHadir = 0;
         let totalTidak = 0;
 
-        formRsvp.addEventListener('submit', (event) => {
-            // 1. Cegah halaman reload saat tombol submit diklik
-            event.preventDefault();
-
-            // 2. Ambil teks yang diketik user (.trim() menghapus spasi kosong di awal/akhir)
-            const nama = inputNama.value.trim();
-            const status = inputStatus.value;
-            const ucapan = inputUcapan.value.trim();
-
-            if (!nama || !ucapan) return;
-
-            // 3. Sembunyikan teks "Belum ada ucapan" saat kiriman pertama masuk
-            if (teksKosong) {
-                teksKosong.classList.add('hidden');
-            }
-
-            // 4. Buat elemen kartu HTML baru lewat JavaScript
+        // Fungsi pembuat 1 kartu ucapan (DOM Manipulation)
+        function buatKartuRsvp(nama, status, ucapan) {
             const kartu = document.createElement('div');
             kartu.className = 'rounded-xl border border-white/15 bg-blue-950/60 p-4 text-left';
 
@@ -476,31 +469,96 @@
 
             const badge = document.createElement('span');
             badge.textContent = status;
-
-            if (status === 'Hadir') {
-                badge.className = 'rounded-full border border-emerald-300/30 bg-emerald-400/20 px-2.5 py-0.5 text-xs font-medium text-emerald-200';
-                totalHadir++;
-                elJumlahHadir.textContent = totalHadir;
-            } else {
-                badge.className = 'rounded-full border border-rose-300/30 bg-rose-400/20 px-2.5 py-0.5 text-xs font-medium text-rose-200';
-                totalTidak++;
-                elJumlahTidak.textContent = totalTidak;
-            }
+            badge.className = status === 'Hadir'
+                ? 'rounded-full border border-emerald-300/30 bg-emerald-400/20 px-2.5 py-0.5 text-xs font-medium text-emerald-200'
+                : 'rounded-full border border-rose-300/30 bg-rose-400/20 px-2.5 py-0.5 text-xs font-medium text-rose-200';
 
             const elUcapan = document.createElement('p');
             elUcapan.className = 'mt-2 text-sm leading-relaxed text-blue-100';
             elUcapan.textContent = ucapan;
 
-            // 5. Rakit elemen anak ke dalam kartu, lalu tempel di urutan paling atas daftar
             header.appendChild(elNama);
             header.appendChild(badge);
             kartu.appendChild(header);
             kartu.appendChild(elUcapan);
-            daftarRsvp.prepend(kartu);
 
-            // 6. Kosongkan isi form setelah berhasil dikirim
+            return kartu;
+        }
+
+        // 1. Ambil semua data RSVP saat halaman pertama kali dibuka
+        async function muatRsvp() {
+            const { data, error } = await db
+                .from('rsvp')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Gagal mengambil data RSVP:', error.message);
+                return;
+            }
+
+            daftarRsvp.innerHTML = '';
+            totalHadir = 0;
+            totalTidak = 0;
+
+            if (!data || data.length === 0) {
+                daftarRsvp.appendChild(teksKosong);
+                teksKosong.classList.remove('hidden');
+                elJumlahHadir.textContent = 0;
+                elJumlahTidak.textContent = 0;
+                return;
+            }
+
+            data.forEach((item) => {
+                if (item.status === 'Hadir') totalHadir++;
+                else totalTidak++;
+
+                daftarRsvp.appendChild(buatKartuRsvp(item.nama, item.status, item.ucapan));
+            });
+
+            elJumlahHadir.textContent = totalHadir;
+            elJumlahTidak.textContent = totalTidak;
+        }
+
+        // 2. Simpan RSVP baru ke Supabase saat form dikirim
+        formRsvp.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const nama = inputNama.value.trim();
+            const status = inputStatus.value;
+            const ucapan = inputUcapan.value.trim();
+
+            if (!nama || !ucapan) return;
+
+            const { error } = await db
+                .from('rsvp')
+                .insert([{ nama, status, ucapan }]);
+
+            if (error) {
+                alert('Gagal mengirim RSVP: ' + error.message);
+                return;
+            }
+
+            // Hapus pesan kosong jika masih ada
+            if (teksKosong && teksKosong.parentNode) {
+                teksKosong.classList.add('hidden');
+            }
+
+            // Update jumlah dan tampilkan kartu baru di paling atas
+            if (status === 'Hadir') {
+                totalHadir++;
+                elJumlahHadir.textContent = totalHadir;
+            } else {
+                totalTidak++;
+                elJumlahTidak.textContent = totalTidak;
+            }
+
+            daftarRsvp.prepend(buatKartuRsvp(nama, status, ucapan));
             formRsvp.reset();
         });
+
+        // Jalankan saat halaman dimuat
+        muatRsvp();
     </script>
 
 </body>
