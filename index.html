@@ -75,9 +75,9 @@
                 Najwan Nafidz Nuryanto
             </h1>
 
-            <div class="mt-3 rounded-2xl border border-white/30 bg-white/10 px-6 py-3.5 backdrop-blur-sm">
-                <p class="text-xs text-blue-100">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
-                <p id="nama-tamu" class="mt-1 text-base font-semibold text-white sm:text-lg">
+            <div class="mt-3 w-full rounded-2xl border border-white/30 bg-white/10 px-5 py-3.5 backdrop-blur-sm">
+                <p class="text-xs text-blue-100">Kepada Yth:</p>
+                <p id="nama-tamu" class="mt-1 break-words text-base font-semibold leading-snug text-white sm:text-lg">
                     Tamu Undangan
                 </p>
             </div>
@@ -151,7 +151,6 @@
 
             <div class="my-6 h-0.5 w-16 rounded-full bg-white/50"></div>
 
-            <!-- TODO (Poin b): Ubah kalimat ucapan dan undangan ini pakai gaya bahasamu sendiri -->
             <div
                 class="w-full rounded-2xl border border-white/20 bg-white/10 p-6 text-sm leading-relaxed text-blue-50 shadow-xl backdrop-blur-sm sm:p-8 sm:text-base">
                 <p>
@@ -223,7 +222,7 @@
                     <h3 class="mt-2 text-lg font-bold text-white">
                         Sabtu, 13 Februari 2027
                     </h3>
-                    <!-- TODO (Poin b): Sesuaikan jam pasti siang hingga sore sesuai rencana acaramu -->
+
                     <p class="mt-1 text-sm text-blue-100">
                         Pukul 13.00 – 17.00 WIB (Siang – Sore)
                     </p>
@@ -236,7 +235,7 @@
                     <h3 class="mt-2 text-lg font-bold text-white">
                         Rumah Nafidz
                     </h3>
-                    <!-- TODO (Poin b): Tambahkan alamat lengkap atau patokan rumah jika diperlukan -->
+
                     <p class="mt-1 text-sm text-blue-100">
                         Silakan ikuti petunjuk peta Google Maps di bawah ini.
                     </p>
@@ -389,6 +388,22 @@
 
     <!-- ==================== 5. JAVASCRIPT ==================== -->
     <script>
+        // ---------- LOGIKA PARAMETER URL (?to=NamaTamu) ----------
+        const params = new URLSearchParams(window.location.search);
+        const namaDariUrl = params.get('to') || params.get('nama');
+        const elNamaTamu = document.getElementById('nama-tamu');
+        const inputNamaRsvp = document.getElementById('input-nama');
+
+        if (namaDariUrl && namaDariUrl.trim() !== '') {
+            const namaBersih = namaDariUrl.trim();
+            elNamaTamu.textContent = namaBersih;
+
+            // Bonus UX: otomatis isi kolom "Nama Kamu" di form RSVP
+            if (inputNamaRsvp) {
+                inputNamaRsvp.value = namaBersih;
+            }
+        }
+
         // ---------- KONTROL COVER & AUDIO ----------
         const cover = document.getElementById('cover');
         const btnBuka = document.getElementById('btn-buka');
