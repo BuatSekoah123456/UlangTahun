@@ -112,7 +112,15 @@
                 <!-- TODO (Poin b): Sesuaikan tahun/usia jika perlu -->
                 13 Februari 2027 • 17th Birthday
             </span>
-
+            <!-- FOTO PROFIL BERBINGKAI KONTRAS -->
+            <!-- TODO (Poin b): Pastikan nama file src sesuai foto yang kamu simpan (nafidz.jpg) -->
+            <div
+                class="mt-6 rounded-full bg-gradient-to-tr from-sky-300 via-white to-blue-400 p-1 shadow-xl shadow-sky-400/25">
+                <div class="rounded-full bg-blue-950 p-1.5">
+                    <img src="nafidz.jpg" alt="Potret Najwan Nafidz Nuryanto"
+                        class="h-40 w-40 rounded-full object-cover object-top sm:h-48 sm:w-48" />
+                </div>
+            </div>
             <h1 class="font-judul mt-5 text-3xl font-bold leading-tight text-white sm:text-5xl">
                 Najwan Nafidz Nuryanto
             </h1>
@@ -308,10 +316,32 @@
             </div>
         </section>
 
-        <!-- FOOTER (diberi pb-24 agar tidak tertutup piringan musik di layar HP) -->
-        <footer class="border-t border-white/10 px-5 pt-8 pb-24 text-center text-xs text-blue-200/70">
-            <!-- TODO (Poin b): Ubah teks penutup sesuai keinginanmu -->
-            <p>Terima kasih atas doa dan kehadirannya • Najwan Nafidz Nuryanto</p>
+        <!-- ==================== FOOTER ==================== -->
+        <footer class="mt-8 border-t border-white/15 bg-blue-950/60 px-5 pt-10 pb-24 text-center backdrop-blur-sm">
+            <div class="mx-auto max-w-3xl space-y-4">
+                <p class="font-judul text-lg font-bold text-white">
+                    Najwan Nafidz Nuryanto
+                </p>
+
+                <!-- TODO (Poin b): Sesuaikan kalimat penutup ini dengan gayamu -->
+                <p class="mx-auto max-w-md text-xs leading-relaxed text-blue-100/80 sm:text-sm">
+                    Kehadiran serta doa terbaik dari teman-teman dan keluarga adalah hadiah paling berharga di hari
+                    spesial ini. Sampai jumpa di Rumah Nafidz!
+                </p>
+
+                <!-- Navigasi Cepat Footer -->
+                <div class="flex items-center justify-center gap-5 pt-1 text-xs font-medium text-sky-200">
+                    <a href="#hero" class="transition hover:text-white">Beranda</a>
+                    <span class="text-white/30">•</span>
+                    <a href="#acara" class="transition hover:text-white">Detail Acara</a>
+                    <span class="text-white/30">•</span>
+                    <a href="#rsvp" class="transition hover:text-white">RSVP</a>
+                </div>
+
+                <p class="pt-3 text-[11px] text-blue-200/50">
+                    13 Februari 2027 • 17th Birthday Invitation
+                </p>
+            </div>
         </footer>
 
     </div>
@@ -319,7 +349,7 @@
     <!-- ==================== 3. AUDIO & PIRINGAN HITAM ==================== -->
     <!-- TODO (Poin b): Taruh file .mp3 di folder proyek lalu sesuaikan nama filenya di src -->
     <audio id="bgm" loop preload="auto">
-        <source src="musik.mp3" type="audio/mpeg" />
+        <source src="Nafidz.mp3" type="audio/mpeg" />
     </audio>
 
     <button id="btn-musik" type="button" aria-label="Putar atau matikan musik"
