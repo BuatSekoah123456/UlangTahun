@@ -6,13 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Undangan Ulang Tahun - Najwan Nafidz Nuryanto</title>
 
-    <!-- Tailwind CSS via CDN -->
+    <!-- Tailwind CSS via CDN (JANGAN DIHAPUS: seluruh styling menggunakan Tailwind) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- TODO (Poin b): Tempel tag <link> Google Fonts pilihanmu di sini -->
+    <!-- Google Fonts (TODO Poin b: boleh diganti dengan pasangan font pilihanmu) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
 
     <style>
-        /* TODO (Poin b): Ganti nama font di bawah ini sesuai Google Fonts yang kamu pilih */
         body {
             font-family: 'Poppins', sans-serif;
         }
@@ -39,67 +43,140 @@
         .piringan-jeda {
             animation-play-state: paused;
         }
+
+        /* Animasi ornamen pesta mengambang lembut */
+        @keyframes melayang {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .animasi-melayang {
+            animation: melayang 4s ease-in-out infinite;
+        }
+
+        .animasi-melayang-lambat {
+            animation: melayang 6s ease-in-out infinite;
+        }
+
+        /* Animasi hujan konfeti */
+        @keyframes jatuh-konfeti {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(105vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .konfeti-jatuh {
+            position: fixed;
+            top: -12px;
+            border-radius: 3px;
+            pointer-events: none;
+            animation-name: jatuh-konfeti;
+            animation-timing-function: ease-out;
+            animation-fill-mode: forwards;
+        }
     </style>
 </head>
 
-<body class="bg-slate-950 text-white antialiased">
+<body class="bg-blue-950 text-white antialiased">
+
+    <!-- Wadah Efek Konfeti (tidak menghalangi klik) -->
+    <div id="wadah-konfeti" class="pointer-events-none fixed inset-0 z-[60] overflow-hidden"></div>
 
     <!-- ==================== 1. COVER FULL-SCREEN ==================== -->
-    <!-- TODO (Poin b): Sesuaikan kombinasi variasi warna biru jika ingin beda dari default -->
     <section id="cover"
-        class="fixed inset-0 z-50 flex flex-col items-center justify-between overflow-y-auto px-6 py-8 text-center bg-gradient-to-b from-blue-950 via-blue-800 to-sky-600 transition-opacity duration-700 sm:py-10">
+        class="fixed inset-0 z-50 flex flex-col items-center justify-between overflow-y-auto px-6 py-8 text-center bg-gradient-to-b from-indigo-950 via-blue-700 to-sky-500 transition-opacity duration-700 sm:py-10">
+
+        <!-- Ornamen Pesta Latar Cover -->
+        <div class="pointer-events-none absolute inset-0 overflow-hidden">
+            <div class="animasi-melayang absolute -top-10 -left-10 h-44 w-44 rounded-full bg-sky-300/20 blur-2xl"></div>
+            <div
+                class="animasi-melayang-lambat absolute top-1/3 -right-12 h-52 w-52 rounded-full bg-amber-300/15 blur-2xl">
+            </div>
+            <div class="animasi-melayang absolute bottom-12 left-8 text-2xl opacity-70">✨</div>
+            <div class="animasi-melayang-lambat absolute top-20 right-10 text-2xl opacity-70">🎉</div>
+            <div class="animasi-melayang absolute bottom-28 right-12 text-xl opacity-60">🎈</div>
+        </div>
 
         <!-- 1. Teks Paling Atas -->
-        <header class="space-y-1">
-            <p class="text-xs uppercase tracking-[0.3em] text-sky-200">
-                You Are Invited
+        <header class="relative z-10 space-y-1.5">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-amber-200">
+                ✦ You Are Invited ✦
             </p>
-            <div class="mx-auto h-0.5 w-12 rounded-full bg-white/60"></div>
+            <div class="mx-auto h-0.5 w-16 rounded-full bg-gradient-to-r from-transparent via-white to-transparent">
+            </div>
         </header>
 
-        <!-- 2. Foto Profil (Sekarang terpisah agar tepat di tengah & proporsional) -->
-        <div
-            class="my-4 rounded-full bg-gradient-to-tr from-sky-300 via-white to-blue-400 p-1.5 shadow-xl shadow-blue-950/40">
-            <div class="rounded-full bg-blue-950 p-1.5">
-                <img src="nafidz.jpg" alt="Potret Najwan Nafidz Nuryanto"
-                    class="h-36 w-36 rounded-full object-cover object-top sm:h-48 sm:w-48" />
+        <!-- 2. Foto Profil -->
+        <div class="relative z-10 my-4">
+            <div
+                class="rounded-full bg-gradient-to-tr from-amber-300 via-white to-sky-300 p-1.5 shadow-2xl shadow-sky-300/30">
+                <div class="rounded-full bg-blue-950 p-1.5">
+                    <img src="nafidz.jpg" alt="Potret Najwan Nafidz Nuryanto"
+                        class="h-36 w-36 rounded-full object-cover object-top sm:h-48 sm:w-48" />
+                </div>
             </div>
+            <span
+                class="absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-amber-300 px-3 py-0.5 text-[11px] font-bold uppercase tracking-wider text-blue-950 shadow">
+                🎂 17th
+            </span>
         </div>
 
         <!-- 3. Judul & Kotak Tamu -->
-        <main class="w-full max-w-md space-y-3 sm:space-y-4">
-            <p class="text-xs font-medium uppercase tracking-widest text-blue-100 sm:text-sm">
-                Sweet 17th Birthday
+        <main class="relative z-10 w-full max-w-md space-y-3 sm:space-y-4">
+            <p class="text-xs font-semibold uppercase tracking-[0.25em] text-sky-100 sm:text-sm">
+                Sweet 17th Birthday Party
             </p>
-            <h1 class="font-judul text-3xl font-bold tracking-tight text-white drop-shadow sm:text-5xl">
+            <h1 class="font-judul text-3xl font-bold tracking-tight text-white drop-shadow-md sm:text-5xl">
                 Najwan Nafidz Nuryanto
             </h1>
 
-            <div class="mt-3 w-full rounded-2xl border border-white/30 bg-white/10 px-5 py-3.5 backdrop-blur-sm">
-                <p class="text-xs text-blue-100">Kepada Yth:</p>
-                <p id="nama-tamu" class="mt-1 break-words text-base font-semibold leading-snug text-white sm:text-lg">
+            <div
+                class="mt-3 w-full rounded-2xl border border-white/40 bg-white/15 px-5 py-3.5 shadow-lg backdrop-blur-md">
+                <p class="text-xs text-sky-100">Kepada Yth:</p>
+                <p id="nama-tamu" class="mt-1 break-words text-base font-bold leading-snug text-white sm:text-lg">
                     Tamu Undangan
                 </p>
             </div>
         </main>
 
         <!-- 4. Tombol Buka Undangan -->
-        <footer class="pt-4 pb-1">
+        <footer class="relative z-10 pt-4 pb-1">
             <button id="btn-buka" type="button"
-                class="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3 text-sm font-semibold text-blue-900 shadow-lg shadow-blue-950/30 transition hover:bg-sky-100 active:scale-95">
-                <span>Buka Undangan</span>
+                class="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-bold text-blue-900 shadow-xl shadow-blue-950/40 ring-4 ring-white/25 transition hover:scale-105 hover:bg-amber-200 active:scale-95">
+                <span>🎉 Buka Undangan</span>
             </button>
         </footer>
     </section>
 
     <!-- ==================== 2. KONTEN UTAMA ==================== -->
-    <div id="konten-utama" class="min-h-screen bg-gradient-to-b from-blue-950 via-blue-900 to-slate-950 text-white">
+    <div id="konten-utama"
+        class="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-indigo-950 via-blue-900 to-blue-950 text-white">
+
+        <!-- Cahaya Dekoratif Latar -->
+        <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+            <div class="absolute top-24 -left-20 h-72 w-72 rounded-full bg-sky-400/15 blur-3xl"></div>
+            <div class="absolute top-1/2 -right-24 h-80 w-80 rounded-full bg-indigo-400/15 blur-3xl"></div>
+            <div class="absolute bottom-10 left-1/3 h-64 w-64 rounded-full bg-amber-300/10 blur-3xl"></div>
+        </div>
 
         <!-- TOPBAR NAVIGASI -->
-        <nav class="sticky top-0 z-40 border-b border-white/15 bg-blue-950/80 backdrop-blur-md">
+        <nav class="sticky top-0 z-40 border-b border-white/20 bg-indigo-950/80 backdrop-blur-md">
             <div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3 sm:px-6">
                 <a href="#hero" class="font-judul text-base font-bold tracking-wide text-white sm:text-lg">
-                    Najwan<span class="text-sky-300">.17</span>
+                    Najwan<span class="text-amber-300">.17</span>
                 </a>
 
                 <ul class="flex items-center gap-2 text-xs font-medium sm:gap-3 sm:text-sm">
@@ -127,172 +204,183 @@
 
         <!-- HERO / LANDING PAGE -->
         <section id="hero"
-            class="mx-auto flex min-h-[85vh] max-w-3xl flex-col items-center justify-center px-5 py-14 text-center sm:px-8">
+            class="relative z-10 mx-auto flex min-h-[85vh] max-w-3xl flex-col items-center justify-center px-5 py-14 text-center sm:px-8">
+
             <span
-                class="inline-block rounded-full border border-sky-300/40 bg-sky-400/15 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-sky-200">
-                <!-- TODO (Poin b): Sesuaikan tahun/usia jika perlu -->
-                13 Februari 2027 • 17th Birthday
+                class="inline-flex items-center gap-2 rounded-full border border-amber-300/50 bg-amber-300/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-amber-200 shadow-sm">
+                ✨ 13 Februari 2027 • 17th Birthday ✨
             </span>
+
             <!-- FOTO PROFIL BERBINGKAI KONTRAS -->
-            <!-- TODO (Poin b): Pastikan nama file src sesuai foto yang kamu simpan (nafidz.jpg) -->
-            <div
-                class="mt-6 rounded-full bg-gradient-to-tr from-sky-300 via-white to-blue-400 p-1 shadow-xl shadow-sky-400/25">
-                <div class="rounded-full bg-blue-950 p-1.5">
-                    <img src="nafidz.jpg" alt="Potret Najwan Nafidz Nuryanto"
-                        class="h-40 w-40 rounded-full object-cover object-top sm:h-48 sm:w-48" />
+            <div class="relative mt-6">
+                <div
+                    class="rounded-full bg-gradient-to-tr from-amber-300 via-white to-sky-400 p-1.5 shadow-2xl shadow-sky-400/30">
+                    <div class="rounded-full bg-indigo-950 p-1.5">
+                        <img src="nafidz.jpg" alt="Potret Najwan Nafidz Nuryanto"
+                            class="h-40 w-40 rounded-full object-cover object-top sm:h-48 sm:w-48" />
+                    </div>
                 </div>
+                <span class="animasi-melayang absolute -top-2 -right-2 text-2xl">🎈</span>
+                <span class="animasi-melayang-lambat absolute -bottom-1 -left-2 text-2xl">✨</span>
             </div>
-            <h1 class="font-judul mt-5 text-3xl font-bold leading-tight text-white sm:text-5xl">
+
+            <h1 class="font-judul mt-6 text-3xl font-bold leading-tight text-white drop-shadow sm:text-5xl">
                 Najwan Nafidz Nuryanto
             </h1>
-            <p class="mt-2 text-xs tracking-wider text-sky-200/90 sm:text-sm">
-                Lahir 13 Februari 2010
+            <p class="mt-2 text-xs font-medium tracking-wider text-sky-200 sm:text-sm">
+                🎂 Lahir 13 Februari 2010
             </p>
 
-            <div class="my-6 h-0.5 w-16 rounded-full bg-white/50"></div>
+            <div class="my-6 h-0.5 w-20 rounded-full bg-gradient-to-r from-transparent via-amber-300 to-transparent">
+            </div>
 
+            <!-- TODO (Poin b): Boleh ubah lagi kalimat ucapan ini pakai gaya bahasamu sendiri -->
             <div
-                class="w-full rounded-2xl border border-white/20 bg-white/10 p-6 text-sm leading-relaxed text-blue-50 shadow-xl backdrop-blur-sm sm:p-8 sm:text-base">
+                class="w-full rounded-3xl border border-white/25 bg-white/10 p-6 text-sm leading-relaxed text-blue-50 shadow-xl backdrop-blur-md sm:p-8 sm:text-base">
                 <p>
-                    Selamat ulang tahun yang ke-17 untuk <strong class="text-white">Najwan Nafidz Nuryanto</strong>!
+                    Selamat ulang tahun yang ke-17 untuk <strong class="text-amber-200">Najwan Nafidz Nuryanto</strong>!
                     Semoga di usia yang baru selalu diberi kesehatan, kebahagiaan, dan segala impiannya tercapai.
                 </p>
-                <p class="mt-3 text-blue-100">
-                    Dengan penuh rasa syukur, kami mengundang kehadiran teman-teman dan keluarga untuk ikut merayakan
-                    momen spesial ini bersama-sama.
+                <p class="mt-3 text-sky-100">
+                    Dengan penuh rasa syukur dan suka cita, kami mengundang kehadiran teman-teman dan keluarga untuk
+                    ikut merayakan
+                    momen spesial ini bersama-sama! 🎉
                 </p>
             </div>
 
             <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
                 <a href="#acara"
-                    class="rounded-full bg-white px-7 py-3 text-sm font-semibold text-blue-950 shadow-md transition hover:bg-sky-100">
-                    Lihat Detail Acara
+                    class="rounded-full bg-white px-7 py-3 text-sm font-bold text-blue-950 shadow-lg transition hover:bg-amber-200">
+                    📅 Lihat Detail Acara
                 </a>
                 <a href="#rsvp"
-                    class="rounded-full border border-white/40 bg-white/5 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/15">
-                    Konfirmasi Kehadiran
+                    class="rounded-full border border-white/40 bg-white/10 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/20">
+                    💌 Konfirmasi Kehadiran
                 </a>
             </div>
         </section>
 
         <!-- DETAIL ACARA + COUNTDOWN + GOOGLE MAPS -->
-        <section id="acara" class="mx-auto max-w-4xl px-5 py-16 sm:px-8">
+        <section id="acara" class="relative z-10 mx-auto max-w-4xl px-5 py-16 sm:px-8">
             <div class="text-center">
-                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-sky-300">
-                    Save The Date
+                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-amber-300">
+                    ✦ Save The Date ✦
                 </p>
                 <h2 class="font-judul mt-2 text-2xl font-bold text-white sm:text-4xl">
                     Detail Acara
                 </h2>
-                <div class="mx-auto mt-4 h-0.5 w-14 rounded-full bg-white/50"></div>
+                <div
+                    class="mx-auto mt-4 h-0.5 w-16 rounded-full bg-gradient-to-r from-transparent via-white to-transparent">
+                </div>
             </div>
 
             <!-- COUNTDOWN -->
-            <div class="mt-8 rounded-2xl border border-white/20 bg-white/10 p-5 text-center backdrop-blur-sm sm:p-6">
-                <p class="text-xs uppercase tracking-widest text-blue-100">
-                    Menghitung Hari Menuju Perayaan
+            <div
+                class="mt-8 rounded-3xl border border-white/25 bg-white/10 p-5 text-center shadow-xl backdrop-blur-md sm:p-6">
+                <p class="text-xs font-semibold uppercase tracking-widest text-sky-200">
+                    ⏳ Menghitung Hari Menuju Perayaan
                 </p>
                 <div class="mt-4 grid grid-cols-4 gap-2 sm:gap-4">
-                    <div class="rounded-xl border border-white/15 bg-blue-950/70 py-3">
-                        <p id="cd-hari" class="text-2xl font-bold text-white sm:text-3xl">00</p>
+                    <div class="rounded-2xl border border-sky-300/30 bg-indigo-950/75 py-3.5 shadow-inner">
+                        <p id="cd-hari" class="text-2xl font-bold text-amber-300 sm:text-3xl">00</p>
                         <p class="mt-1 text-[11px] uppercase tracking-wider text-sky-200">Hari</p>
                     </div>
-                    <div class="rounded-xl border border-white/15 bg-blue-950/70 py-3">
+                    <div class="rounded-2xl border border-sky-300/30 bg-indigo-950/75 py-3.5 shadow-inner">
                         <p id="cd-jam" class="text-2xl font-bold text-white sm:text-3xl">00</p>
                         <p class="mt-1 text-[11px] uppercase tracking-wider text-sky-200">Jam</p>
                     </div>
-                    <div class="rounded-xl border border-white/15 bg-blue-950/70 py-3">
+                    <div class="rounded-2xl border border-sky-300/30 bg-indigo-950/75 py-3.5 shadow-inner">
                         <p id="cd-menit" class="text-2xl font-bold text-white sm:text-3xl">00</p>
                         <p class="mt-1 text-[11px] uppercase tracking-wider text-sky-200">Menit</p>
                     </div>
-                    <div class="rounded-xl border border-white/15 bg-blue-950/70 py-3">
-                        <p id="cd-detik" class="text-2xl font-bold text-white sm:text-3xl">00</p>
+                    <div class="rounded-2xl border border-sky-300/30 bg-indigo-950/75 py-3.5 shadow-inner">
+                        <p id="cd-detik" class="text-2xl font-bold text-sky-300 sm:text-3xl">00</p>
                         <p class="mt-1 text-[11px] uppercase tracking-wider text-sky-200">Detik</p>
                     </div>
                 </div>
-                <p id="cd-status" class="mt-3 text-xs text-sky-200"></p>
+                <p id="cd-status" class="mt-3 text-xs font-medium text-amber-200"></p>
             </div>
 
             <!-- KARTU WAKTU & LOKASI -->
             <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm">
-                    <p class="text-xs font-semibold uppercase tracking-widest text-sky-300">
-                        Hari &amp; Waktu
+                <div class="rounded-3xl border border-white/25 bg-white/10 p-6 shadow-lg backdrop-blur-md">
+                    <p class="text-xs font-semibold uppercase tracking-widest text-amber-300">
+                        🗓️ Hari &amp; Waktu
                     </p>
                     <h3 class="mt-2 text-lg font-bold text-white">
                         Sabtu, 13 Februari 2027
                     </h3>
-
-                    <p class="mt-1 text-sm text-blue-100">
+                    <p class="mt-1 text-sm text-sky-100">
                         Pukul 13.00 – 17.00 WIB (Siang – Sore)
                     </p>
                 </div>
 
-                <div class="rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm">
-                    <p class="text-xs font-semibold uppercase tracking-widest text-sky-300">
-                        Lokasi Acara
+                <div class="rounded-3xl border border-white/25 bg-white/10 p-6 shadow-lg backdrop-blur-md">
+                    <p class="text-xs font-semibold uppercase tracking-widest text-amber-300">
+                        📍 Lokasi Acara
                     </p>
                     <h3 class="mt-2 text-lg font-bold text-white">
                         Rumah Nafidz
                     </h3>
-
-                    <p class="mt-1 text-sm text-blue-100">
+                    <p class="mt-1 text-sm text-sky-100">
                         Silakan ikuti petunjuk peta Google Maps di bawah ini.
                     </p>
                 </div>
             </div>
 
             <!-- EMBED GOOGLE MAPS -->
-            <div class="mt-6 overflow-hidden rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm">
+            <div
+                class="mt-6 overflow-hidden rounded-3xl border border-white/25 bg-white/10 p-3 shadow-xl backdrop-blur-md">
                 <iframe title="Lokasi Rumah Nafidz"
                     src="https://maps.google.com/maps?q=-6.249356268157544,106.59296455153431&z=16&output=embed"
-                    class="h-64 w-full rounded-xl border-0 sm:h-80" loading="lazy"
+                    class="h-64 w-full rounded-2xl border-0 sm:h-80" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
 
                 <div class="mt-3 flex justify-center">
                     <a href="https://www.google.com/maps?q=-6.249356268157544,106.59296455153431" target="_blank"
                         rel="noopener noreferrer"
-                        class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-blue-950 shadow transition hover:bg-sky-100">
-                        Buka di Google Maps
+                        class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-bold text-blue-950 shadow transition hover:bg-amber-200">
+                        🗺️ Buka di Google Maps
                     </a>
                 </div>
             </div>
         </section>
 
         <!-- ==================== RSVP & UCAPAN ==================== -->
-        <section id="rsvp" class="mx-auto max-w-3xl px-5 py-16 sm:px-8">
-            <!-- Judul Section -->
+        <section id="rsvp" class="relative z-10 mx-auto max-w-3xl px-5 py-16 sm:px-8">
             <div class="text-center">
-                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-sky-300">
-                    Konfirmasi Kehadiran
+                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-amber-300">
+                    ✦ Konfirmasi Kehadiran ✦
                 </p>
                 <h2 class="font-judul mt-2 text-2xl font-bold text-white sm:text-4xl">
                     RSVP &amp; Ucapan
                 </h2>
-                <div class="mx-auto mt-4 h-0.5 w-14 rounded-full bg-white/50"></div>
+                <div
+                    class="mx-auto mt-4 h-0.5 w-16 rounded-full bg-gradient-to-r from-transparent via-white to-transparent">
+                </div>
             </div>
 
             <!-- Ringkasan Jumlah Kehadiran -->
             <div class="mt-8 grid grid-cols-2 gap-3 text-center">
-                <div class="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
-                    <p id="jumlah-hadir" class="text-2xl font-bold text-white">0</p>
-                    <p class="mt-1 text-xs uppercase tracking-wider text-sky-200">Hadir</p>
+                <div class="rounded-2xl border border-emerald-300/30 bg-emerald-400/10 p-4 backdrop-blur-md">
+                    <p id="jumlah-hadir" class="text-2xl font-bold text-emerald-200">0</p>
+                    <p class="mt-1 text-xs font-medium uppercase tracking-wider text-sky-100">Hadir</p>
                 </div>
-                <div class="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
-                    <p id="jumlah-tidak" class="text-2xl font-bold text-white">0</p>
-                    <p class="mt-1 text-xs uppercase tracking-wider text-sky-200">Tidak Hadir</p>
+                <div class="rounded-2xl border border-rose-300/30 bg-rose-400/10 p-4 backdrop-blur-md">
+                    <p id="jumlah-tidak" class="text-2xl font-bold text-rose-200">0</p>
+                    <p class="mt-1 text-xs font-medium uppercase tracking-wider text-sky-100">Tidak Hadir</p>
                 </div>
             </div>
 
             <!-- Form Input RSVP -->
             <form id="form-rsvp"
-                class="mt-6 space-y-4 rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm sm:p-8">
+                class="mt-6 space-y-4 rounded-3xl border border-white/25 bg-white/10 p-6 shadow-xl backdrop-blur-md sm:p-8">
                 <div>
                     <label for="input-nama" class="block text-xs font-semibold uppercase tracking-wider text-sky-200">
                         Nama Kamu
                     </label>
                     <input id="input-nama" type="text" required placeholder="Masukkan namamu..."
-                        class="mt-1.5 w-full rounded-xl border border-white/25 bg-blue-950/60 px-4 py-2.5 text-sm text-white placeholder-blue-200/50 focus:border-sky-300 focus:outline-none" />
+                        class="mt-1.5 w-full rounded-xl border border-white/30 bg-indigo-950/70 px-4 py-2.5 text-sm text-white placeholder-blue-200/50 focus:border-amber-300 focus:outline-none" />
                 </div>
 
                 <div>
@@ -300,7 +388,7 @@
                         Konfirmasi Kehadiran
                     </label>
                     <select id="input-status"
-                        class="mt-1.5 w-full rounded-xl border border-white/25 bg-blue-950 px-4 py-2.5 text-sm text-white focus:border-sky-300 focus:outline-none">
+                        class="mt-1.5 w-full rounded-xl border border-white/30 bg-indigo-950 px-4 py-2.5 text-sm text-white focus:border-amber-300 focus:outline-none">
                         <option value="Hadir">Hadir</option>
                         <option value="Tidak Hadir">Tidak Hadir</option>
                     </select>
@@ -310,26 +398,25 @@
                     <label for="input-ucapan" class="block text-xs font-semibold uppercase tracking-wider text-sky-200">
                         Ucapan &amp; Doa untuk Nafidz
                     </label>
-                    <!-- TODO (Poin b): Sesuaikan placeholder ucapan sesuai gaya bahasa undanganmu -->
                     <textarea id="input-ucapan" rows="3" required
                         placeholder="Tulis ucapan dan doa terbaikmu di sini..."
-                        class="mt-1.5 w-full rounded-xl border border-white/25 bg-blue-950/60 px-4 py-2.5 text-sm text-white placeholder-blue-200/50 focus:border-sky-300 focus:outline-none"></textarea>
+                        class="mt-1.5 w-full rounded-xl border border-white/30 bg-indigo-950/70 px-4 py-2.5 text-sm text-white placeholder-blue-200/50 focus:border-amber-300 focus:outline-none"></textarea>
                 </div>
 
                 <button type="submit"
-                    class="w-full rounded-full bg-white py-3 text-sm font-semibold text-blue-950 shadow-md transition hover:bg-sky-100 active:scale-95">
-                    Kirim Konfirmasi
+                    class="w-full rounded-full bg-white py-3 text-sm font-bold text-blue-950 shadow-lg transition hover:bg-amber-200 active:scale-95">
+                    🎊 Kirim Konfirmasi &amp; Ucapan
                 </button>
             </form>
 
-            <!-- Daftar Ucapan yang Masuk (Diisi secara dinamis lewat JavaScript) -->
+            <!-- Daftar Ucapan -->
             <div class="mt-8 space-y-3">
-                <h3 class="text-sm font-semibold uppercase tracking-widest text-sky-200">
-                    Daftar Ucapan &amp; Kehadiran
+                <h3 class="text-sm font-semibold uppercase tracking-widest text-amber-200">
+                    💬 Daftar Ucapan &amp; Kehadiran
                 </h3>
                 <div id="daftar-rsvp" class="space-y-3">
                     <p id="rsvp-kosong"
-                        class="rounded-xl border border-dashed border-white/20 p-5 text-center text-sm text-blue-200/80">
+                        class="rounded-2xl border border-dashed border-white/25 p-5 text-center text-sm text-blue-100/80">
                         Belum ada ucapan. Jadilah yang pertama mengirim doa untuk Nafidz!
                     </p>
                 </div>
@@ -337,29 +424,28 @@
         </section>
 
         <!-- ==================== FOOTER ==================== -->
-        <footer class="mt-8 border-t border-white/15 bg-blue-950/60 px-5 pt-10 pb-24 text-center backdrop-blur-sm">
+        <footer
+            class="relative z-10 mt-8 border-t border-white/20 bg-indigo-950/75 px-5 pt-10 pb-24 text-center backdrop-blur-md">
             <div class="mx-auto max-w-3xl space-y-4">
                 <p class="font-judul text-lg font-bold text-white">
-                    Najwan Nafidz Nuryanto
+                    🎉 Najwan Nafidz Nuryanto 🎉
                 </p>
 
-                <!-- TODO (Poin b): Sesuaikan kalimat penutup ini dengan gayamu -->
-                <p class="mx-auto max-w-md text-xs leading-relaxed text-blue-100/80 sm:text-sm">
+                <p class="mx-auto max-w-md text-xs leading-relaxed text-sky-100/85 sm:text-sm">
                     Kehadiran serta doa terbaik dari teman-teman dan keluarga adalah hadiah paling berharga di hari
                     spesial ini. Sampai jumpa di Rumah Nafidz!
                 </p>
 
-                <!-- Navigasi Cepat Footer -->
                 <div class="flex items-center justify-center gap-5 pt-1 text-xs font-medium text-sky-200">
-                    <a href="#hero" class="transition hover:text-white">Beranda</a>
+                    <a href="#hero" class="transition hover:text-amber-300">Beranda</a>
                     <span class="text-white/30">•</span>
-                    <a href="#acara" class="transition hover:text-white">Detail Acara</a>
+                    <a href="#acara" class="transition hover:text-amber-300">Detail Acara</a>
                     <span class="text-white/30">•</span>
-                    <a href="#rsvp" class="transition hover:text-white">RSVP</a>
+                    <a href="#rsvp" class="transition hover:text-amber-300">RSVP</a>
                 </div>
 
-                <p class="pt-3 text-[11px] text-blue-200/50">
-                    13 Februari 2027 • 17th Birthday Invitation
+                <p class="pt-3 text-[11px] text-blue-200/60">
+                    13 Februari 2027 • Sweet 17th Birthday Invitation
                 </p>
             </div>
         </footer>
@@ -367,17 +453,16 @@
     </div>
 
     <!-- ==================== 3. AUDIO & PIRINGAN HITAM ==================== -->
-    <!-- TODO (Poin b): Taruh file .mp3 di folder proyek lalu sesuaikan nama filenya di src -->
     <audio id="bgm" loop preload="auto">
         <source src="Nafidz.mp3" type="audio/mpeg" />
     </audio>
 
     <button id="btn-musik" type="button" aria-label="Putar atau matikan musik"
-        class="fixed bottom-5 left-5 z-40 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/60 bg-slate-950 shadow-lg shadow-blue-950/60 transition hover:scale-105 active:scale-95">
+        class="fixed bottom-5 left-5 z-40 flex h-14 w-14 items-center justify-center rounded-full border-2 border-amber-300/80 bg-slate-950 shadow-xl shadow-blue-950/70 transition hover:scale-105 active:scale-95">
         <div id="piringan"
             class="piringan-putar piringan-jeda relative flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-tr from-zinc-950 via-zinc-800 to-zinc-950 ring-2 ring-zinc-700/70">
             <div class="h-8 w-8 rounded-full border border-white/15"></div>
-            <div class="absolute flex h-4 w-4 items-center justify-center rounded-full bg-sky-500">
+            <div class="absolute flex h-4 w-4 items-center justify-center rounded-full bg-sky-400">
                 <div class="h-1.5 w-1.5 rounded-full bg-white"></div>
             </div>
         </div>
@@ -388,6 +473,32 @@
 
     <!-- ==================== 5. JAVASCRIPT ==================== -->
     <script>
+        // ---------- EFEK KONFETI MERIAH ----------
+        function luncurkanKonfeti(jumlah = 45) {
+            const warnaKonfeti = ['#ffffff', '#38bdf8', '#fde047', '#60a5fa', '#f472b6'];
+            const wadah = document.getElementById('wadah-konfeti');
+            if (!wadah) return;
+
+            for (let i = 0; i < jumlah; i++) {
+                const keping = document.createElement('span');
+                const ukuran = Math.random() * 8 + 6;
+                const kiri = Math.random() * 100;
+                const durasi = Math.random() * 2 + 2.2;
+                const delay = Math.random() * 0.5;
+
+                keping.className = 'konfeti-jatuh';
+                keping.style.left = kiri + 'vw';
+                keping.style.width = ukuran + 'px';
+                keping.style.height = (ukuran * 0.6) + 'px';
+                keping.style.backgroundColor = warnaKonfeti[Math.floor(Math.random() * warnaKonfeti.length)];
+                keping.style.animationDuration = durasi + 's';
+                keping.style.animationDelay = delay + 's';
+
+                wadah.appendChild(keping);
+                setTimeout(() => keping.remove(), (durasi + delay) * 1000 + 200);
+            }
+        }
+
         // ---------- LOGIKA PARAMETER URL (?to=NamaTamu) ----------
         const params = new URLSearchParams(window.location.search);
         const namaDariUrl = params.get('to') || params.get('nama');
@@ -398,7 +509,6 @@
             const namaBersih = namaDariUrl.trim();
             elNamaTamu.textContent = namaBersih;
 
-            // Bonus UX: otomatis isi kolom "Nama Kamu" di form RSVP
             if (inputNamaRsvp) {
                 inputNamaRsvp.value = namaBersih;
             }
@@ -425,7 +535,6 @@
         }
 
         btnBuka.addEventListener('click', () => {
-            // Pastikan selalu mulai dari paling atas (Beranda) dan bersihkan #hash lama
             window.scrollTo({ top: 0, behavior: 'instant' });
             history.replaceState(null, '', window.location.pathname + window.location.search);
             setMenuAktif('hero');
@@ -436,6 +545,7 @@
             }, 700);
 
             putarMusik();
+            luncurkanKonfeti(55);
         });
 
         btnMusik.addEventListener('click', () => {
@@ -491,7 +601,6 @@
         cekPosisiScroll();
 
         // ---------- COUNTDOWN ACARA ----------
-        // TODO (Poin b): Pastikan jam mulai di sini sama dengan jam di kartu Detail Acara
         const targetAcara = new Date('2027-02-13T13:00:00+07:00').getTime();
 
         function updateCountdown() {
@@ -503,7 +612,7 @@
                 document.getElementById('cd-jam').textContent = '00';
                 document.getElementById('cd-menit').textContent = '00';
                 document.getElementById('cd-detik').textContent = '00';
-                document.getElementById('cd-status').textContent = 'Hari perayaan telah tiba!';
+                document.getElementById('cd-status').textContent = '🎉 Hari perayaan telah tiba!';
                 clearInterval(timerCountdown);
                 return;
             }
@@ -540,10 +649,9 @@
         let totalHadir = 0;
         let totalTidak = 0;
 
-        // Fungsi pembuat 1 kartu ucapan (DOM Manipulation)
         function buatKartuRsvp(nama, status, ucapan) {
             const kartu = document.createElement('div');
-            kartu.className = 'rounded-xl border border-white/15 bg-blue-950/60 p-4 text-left';
+            kartu.className = 'rounded-2xl border border-white/20 bg-indigo-950/65 p-4 text-left shadow';
 
             const header = document.createElement('div');
             header.className = 'flex items-center justify-between gap-2';
@@ -555,11 +663,11 @@
             const badge = document.createElement('span');
             badge.textContent = status;
             badge.className = status === 'Hadir'
-                ? 'rounded-full border border-emerald-300/30 bg-emerald-400/20 px-2.5 py-0.5 text-xs font-medium text-emerald-200'
-                : 'rounded-full border border-rose-300/30 bg-rose-400/20 px-2.5 py-0.5 text-xs font-medium text-rose-200';
+                ? 'rounded-full border border-emerald-300/40 bg-emerald-400/20 px-2.5 py-0.5 text-xs font-medium text-emerald-200'
+                : 'rounded-full border border-rose-300/40 bg-rose-400/20 px-2.5 py-0.5 text-xs font-medium text-rose-200';
 
             const elUcapan = document.createElement('p');
-            elUcapan.className = 'mt-2 text-sm leading-relaxed text-blue-100';
+            elUcapan.className = 'mt-2 text-sm leading-relaxed text-sky-100';
             elUcapan.textContent = ucapan;
 
             header.appendChild(elNama);
@@ -570,7 +678,6 @@
             return kartu;
         }
 
-        // 1. Ambil semua data RSVP saat halaman pertama kali dibuka
         async function muatRsvp() {
             const { data, error } = await db
                 .from('rsvp')
@@ -605,7 +712,6 @@
             elJumlahTidak.textContent = totalTidak;
         }
 
-        // 2. Simpan RSVP baru ke Supabase saat form dikirim
         formRsvp.addEventListener('submit', async (event) => {
             event.preventDefault();
 
@@ -624,12 +730,10 @@
                 return;
             }
 
-            // Hapus pesan kosong jika masih ada
             if (teksKosong && teksKosong.parentNode) {
                 teksKosong.classList.add('hidden');
             }
 
-            // Update jumlah dan tampilkan kartu baru di paling atas
             if (status === 'Hadir') {
                 totalHadir++;
                 elJumlahHadir.textContent = totalHadir;
@@ -640,9 +744,9 @@
 
             daftarRsvp.prepend(buatKartuRsvp(nama, status, ucapan));
             formRsvp.reset();
+            luncurkanKonfeti(35);
         });
 
-        // Jalankan saat halaman dimuat
         muatRsvp();
     </script>
 
